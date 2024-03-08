@@ -44,6 +44,26 @@ describe("Vendor API", () => {
       expect(Array.isArray(response.body)).toBe(true);
     });
 
+    //test pagination
+    it("should get a list of 5 vendors", async () => {
+      const response = await request(app).get("/vendors?limit=5");
+      expect(response.status).toBe(200);
+      expect(Array.isArray(response.body) && response.body.length == 5).toBe(
+        true
+      );
+    });
+
+    //test filters
+    it("should get a list of 5 vendors", async () => {
+      const response = await request(app).get(
+        "/vendors?email=vendor1_test_email@example.com"
+      );
+      expect(response.status).toBe(200);
+      expect(Array.isArray(response.body) && response.body.length == 1).toBe(
+        true
+      );
+    });
+
     it("should create a new vendor", async () => {
       const newVendor = {
         name: "Example Vendor",
@@ -70,8 +90,6 @@ describe("Vendor API", () => {
   });
 
   afterAll(async () => {
-    // Close the Express app after all tests have finished
-
     const testEmails = [
       "vendor2_test_email@example.com",
       "vendor1_test_email@example.com",

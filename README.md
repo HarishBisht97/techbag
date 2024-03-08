@@ -87,3 +87,6 @@ This repository contains a Node.js project implementing a RESTful API for vendor
 
 * Consider authentication and authorization mechanisms.
 * Please refrain from using AI Generated code for this hiring challenge (You are free to use AI in the job though!)
+
+## Demo
+https://www.loom.com/share/33fb785771b449ce98d028b17d9165fe

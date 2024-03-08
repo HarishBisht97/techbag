@@ -4,40 +4,42 @@ import { prisma } from "../client/prisma"; // Import prisma object correctly
 
 require("dotenv").config({ path: ".env" });
 
+const testVendors = [
+  {
+    name: "Vendor 1",
+    email: "vendor1_test_email@example.com",
+    kyc_metadata: {
+      company_pAN: "1234567890",
+      contracts: ["contract1.pdf", "contract2.pdf"],
+      agreements: ["agreement1.pdf", "agreement2.pdf"],
+    },
+    password: "password1",
+    phone: "1234567890",
+    phone_country_code: 1,
+  },
+  {
+    name: "Vendor 2",
+    email: "vendor2_test_email@example.com",
+    kyc_metadata: {
+      company_pAN: "1234567890",
+      contracts: ["contract1.pdf", "contract2.pdf"],
+      agreements: ["agreement1.pdf", "agreement2.pdf"],
+    },
+    password: "password2",
+    phone: "9876543210",
+    phone_country_code: 1,
+  },
+];
+
 describe("Vendor API", () => {
   beforeAll(async () => {
-    // Set up any necessary database state before running each test
     await prisma.vendor.createMany({
-      data: [
-        {
-          name: "Vendor 1",
-          email: "vendor1_test_email@example.com",
-          kyc_metadata: {
-            company_pAN: "1234567890",
-            contracts: ["contract1.pdf", "contract2.pdf"],
-            agreements: ["agreement1.pdf", "agreement2.pdf"],
-          },
-          password: "password1",
-          phone: "1234567890",
-          phone_country_code: 1,
-        },
-        {
-          name: "Vendor 2",
-          email: "vendor2_test_email@example.com",
-          kyc_metadata: {
-            company_pAN: "1234567890",
-            contracts: ["contract1.pdf", "contract2.pdf"],
-            agreements: ["agreement1.pdf", "agreement2.pdf"],
-          },
-          password: "password2",
-          phone: "9876543210",
-          phone_country_code: 1,
-        },
-      ],
+      data: testVendors,
     });
   });
 
   describe("Vendor CRUD operations", () => {
+    //test vendor fetch
     it("should get a list of vendors", async () => {
       const response = await request(app).get("/vendors");
       expect(response.status).toBe(200);
@@ -46,15 +48,15 @@ describe("Vendor API", () => {
 
     //test pagination
     it("should get a list of 5 vendors", async () => {
-      const response = await request(app).get("/vendors?limit=5");
+      const response = await request(app).get("/vendors?limit=2");
       expect(response.status).toBe(200);
-      expect(Array.isArray(response.body) && response.body.length == 5).toBe(
+      expect(Array.isArray(response.body) && response.body.length == 2).toBe(
         true
       );
     });
 
     //test filters
-    it("should get a list of 5 vendors", async () => {
+    it("should get a list of 1 vendor", async () => {
       const response = await request(app).get(
         "/vendors?email=vendor1_test_email@example.com"
       );

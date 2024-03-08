@@ -2,3 +2,4 @@ database/
 node_modules/
 *.original.ts
 dist/
+.env

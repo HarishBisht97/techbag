@@ -60,11 +60,6 @@ This repository contains a Node.js project implementing a RESTful API for vendor
 
 2. **Start Server (Development):** 
    ```bash
-   npm run dev
-   ```
-
-3. **Start Server (Production):** 
-   ```bash
    npm run start
    ```
 
